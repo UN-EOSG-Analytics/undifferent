@@ -2,22 +2,9 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { Comparison } from '../src/react/Comparison'
+import { DiffViewer } from '../src/react'
 import type { DiffResult } from '../src/core'
-
-interface DocumentMetadata {
-  symbol: string
-  title: string
-  date: string | null
-  year: number | null
-  subjects: string[]
-  vote?: {
-    inFavour: number
-    against: number
-    abstaining: number
-  }
-  agendaInfo?: string
-}
+import type { UNDocumentMetadata } from '../src/un-fetcher'
 
 interface DiffResponse extends DiffResult {
   formats?: {
@@ -25,8 +12,8 @@ interface DiffResponse extends DiffResult {
     right: 'doc' | 'pdf'
   }
   metadata?: {
-    left: DocumentMetadata
-    right: DocumentMetadata
+    left: UNDocumentMetadata
+    right: UNDocumentMetadata
   }
 }
 
@@ -223,93 +210,19 @@ function HomeContent() {
         )}
 
         {hasQueryParams && diffData && (
-          <div className="space-y-4">
-            {/* Document Headers */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-left">
-                <h3 className="text-base font-semibold">{symbol1}</h3>
-                {diffData?.metadata?.left?.date && (
-                  <p className="mt-1 text-sm text-gray-600">
-                    {new Date(diffData.metadata.left.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </p>
-                )}
-                <a
-                  href={`https://documents.un.org/api/symbol/access?s=${encodeURIComponent(symbol1)}&l=en&t=pdf`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-block text-sm text-[#009edb] hover:underline"
-                >
-                  View PDF →
-                </a>
-                {diffData?.metadata?.left?.vote && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    Vote: {diffData.metadata.left.vote.inFavour}–{diffData.metadata.left.vote.against}–{diffData.metadata.left.vote.abstaining}
-                  </p>
-                )}
-                {diffData?.formats?.left === 'pdf' && (
-                  <p className="mt-2 flex items-center gap-1 text-xs text-amber-600">
-                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    PDF source (lower quality)
-                  </p>
-                )}
-              </div>
-              <div className="text-left">
-                <h3 className="text-base font-semibold">{symbol2}</h3>
-                {diffData?.metadata?.right?.date && (
-                  <p className="mt-1 text-sm text-gray-600">
-                    {new Date(diffData.metadata.right.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </p>
-                )}
-                <a
-                  href={`https://documents.un.org/api/symbol/access?s=${encodeURIComponent(symbol2)}&l=en&t=pdf`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-1 inline-block text-sm text-[#009edb] hover:underline"
-                >
-                  View PDF →
-                </a>
-                {diffData?.metadata?.right?.vote && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    Vote: {diffData.metadata.right.vote.inFavour}–{diffData.metadata.right.vote.against}–{diffData.metadata.right.vote.abstaining}
-                  </p>
-                )}
-                {diffData?.formats?.right === 'pdf' && (
-                  <p className="mt-2 flex items-center gap-1 text-xs text-amber-600">
-                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    PDF source (lower quality)
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Diff Content */}
-            {loading ? (
-              <div className="py-8 text-center">
-                <div className="inline-flex items-center gap-2 text-gray-600">
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#009edb]"></div>
-                  Loading comparison...
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {diffData.items.map((item, index) => (
-                  <Comparison key={index} item={item} />
-                ))}
-              </div>
-            )}
-          </div>
+          <DiffViewer
+            data={diffData}
+            left={{
+              symbol: symbol1,
+              metadata: diffData.metadata?.left,
+              format: diffData.formats?.left,
+            }}
+            right={{
+              symbol: symbol2,
+              metadata: diffData.metadata?.right,
+              format: diffData.formats?.right,
+            }}
+          />
         )}
 
         {hasQueryParams && loading && !diffData && (

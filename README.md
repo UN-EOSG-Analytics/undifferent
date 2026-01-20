@@ -39,13 +39,21 @@ The react module provides components for displaying diffs:
 ```tsx
 import { DiffViewer, Comparison, DiffItem } from 'undifferent/react'
 import type { DiffResult } from 'undifferent/core'
+import type { UNDocumentMetadata } from 'undifferent/un-fetcher'
 
-// Full viewer with titles and score
+// Full viewer with document headers (symbol, date, PDF link, vote)
 <DiffViewer 
   data={diffResult}
-  leftTitle="Version A"
-  rightTitle="Version B"
-  showScore
+  left={{
+    symbol: 'A/RES/77/16',
+    metadata: leftMetadata,  // UNDocumentMetadata from fetchDocumentMetadata
+    format: 'doc',           // 'doc' | 'pdf'
+  }}
+  right={{
+    symbol: 'A/RES/79/326',
+    metadata: rightMetadata,
+    format: 'doc',
+  }}
 />
 
 // Or build your own UI with individual components
@@ -66,11 +74,13 @@ const doc = await fetchUNDocument('A/RES/77/16')
 console.log(doc.lines)    // Array of text lines
 console.log(doc.format)   // 'doc' or 'pdf'
 
-// Fetch document metadata (title, date, year) from UN Digital Library
+// Fetch document metadata from UN Digital Library
 const meta = await fetchDocumentMetadata('A/HRC/RES/50/13')
-console.log(meta.title)   // "Access to medicines, vaccines..."
-console.log(meta.date)    // "2022-07-14"
-console.log(meta.year)    // 2022
+console.log(meta.title)     // "Access to medicines, vaccines..."
+console.log(meta.date)      // "2022-07-14"
+console.log(meta.year)      // 2022
+console.log(meta.subjects)  // ["RIGHT TO HEALTH", "VACCINES", ...]
+console.log(meta.vote)      // { inFavour: 29, against: 15, abstaining: 3 }
 ```
 
 ## Styling
@@ -84,7 +94,6 @@ The React components use CSS variables for theming:
   --diff-removed-bg: #fef2f2;
   --diff-moved-bg: #fefce8;
   --diff-aligned-bg: #eff6ff;
-  --diff-score-color: #009edb;
 }
 ```
 
@@ -98,7 +107,8 @@ The React components use CSS variables for theming:
 
 ### React
 
-- `<DiffViewer>` - Full diff viewer component
+- `<DiffViewer>` - Full diff viewer with document headers and diff items
+- `<DocumentHeader>` - Document metadata display (symbol, date, PDF link, vote)
 - `<Comparison>` - Single diff row (left + right)
 - `<DiffItem>` - Single side content
 - `parseHighlightedText(text)` - Parse diff markup to React elements
@@ -107,6 +117,34 @@ The React components use CSS variables for theming:
 
 - `fetchUNDocument(symbol)` - Fetch UN document content by symbol from [ODS](https://documents.un.org)
 - `fetchDocumentMetadata(symbol)` - Fetch metadata (title, date, year) from [UN Digital Library](https://digitallibrary.un.org)
+
+## Project Structure
+
+```
+undifferent/
+├── src/                    # LIBRARY CODE - edit here for features
+│   ├── core/               # Pure TypeScript diff algorithm (no React)
+│   │   ├── diff.ts         # Main diff algorithm
+│   │   ├── similarity.ts   # Levenshtein similarity
+│   │   └── highlight.ts    # Diff markup generation
+│   ├── react/              # React components for displaying diffs
+│   │   ├── DiffViewer.tsx  # Main viewer component
+│   │   ├── DocumentHeader.tsx # Document metadata display
+│   │   ├── Comparison.tsx  # Single diff row (left + right)
+│   │   └── DiffItem.tsx    # Single side content
+│   └── un-fetcher/         # UN document fetching (server-side)
+│       ├── fetcher.ts      # Fetch documents from ODS
+│       └── parser.ts       # Parse UN symbols
+├── app/                    # DEMO APP ONLY - just consumes the library
+│   ├── page.tsx            # Demo page with example comparisons
+│   └── api/diff/route.ts   # API endpoint using un-fetcher
+└── dist/                   # Built library output
+```
+
+**IMPORTANT:** The `app/` directory is only a demo. All features, UI components, and logic should be implemented in `src/` (the library). The app should only:
+- Provide example comparisons
+- Call the API and pass data to library components
+- Handle routing/navigation
 
 ## License
 
