@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Comparison } from '../src/react/Comparison'
 import type { DiffResult } from '../src/core'
@@ -24,7 +24,7 @@ function extractYear(symbol: string): string {
   return 'Unknown'
 }
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -274,5 +274,24 @@ export default function Home() {
         )}
       </div>
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-gray-50 p-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="py-8 text-center">
+            <div className="inline-flex items-center gap-2 text-gray-600">
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#009edb]"></div>
+              Loading...
+            </div>
+          </div>
+        </div>
+      </main>
+    }>
+      <HomeContent />
+    </Suspense>
   )
 }
