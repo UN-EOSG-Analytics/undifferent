@@ -1,3 +1,5 @@
+import 'server-only'
+
 export { fetchUNDocument, fetchDocumentMetadata } from './fetcher'
 export type { UNDocument, UNDocumentMetadata } from './fetcher'
 

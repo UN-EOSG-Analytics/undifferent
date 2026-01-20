@@ -36,6 +36,7 @@
   "dependencies": {
     "diff": "^8.0.3",
     "fast-levenshtein": "^3.0.0",
+    "server-only": "^0.0.1",
     "unpdf": "^0.12.1",
     "word-extractor": "^1.0.4"
   },
