@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --diff-toggle-active-bg: #009edb;
+  --diff-toggle-active-text: white;
+  --diff-toggle-bg: #f3f4f6;
+  --diff-toggle-border: #d1d5db;
+  --diff-toggle-text: #374151;
+  --diff-item-bg: #ffffff;
+  --diff-added-bg: #f0fdf4;
+  --diff-removed-bg: #fef2f2;
+  --diff-moved-bg: #fefce8;
+  --diff-aligned-bg: #eff6ff;
+  --diff-score-color: #009edb;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f9fafb;
+}

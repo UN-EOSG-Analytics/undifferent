@@ -1,0 +1,71 @@
+{
+  "name": "undifferent",
+  "version": "0.1.0",
+  "description": "Diff algorithm and viewer for UN documents",
+  "type": "module",
+  "exports": {
+    "./core": {
+      "import": "./dist/core/index.js",
+      "types": "./dist/core/index.d.ts"
+    },
+    "./un-fetcher": {
+      "import": "./dist/un-fetcher/index.js",
+      "types": "./dist/un-fetcher/index.d.ts"
+    },
+    "./react": {
+      "import": "./dist/react/index.js",
+      "types": "./dist/react/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "next dev",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "diff": "^8.0.3",
+    "fast-levenshtein": "^3.0.0",
+    "unpdf": "^0.12.1",
+    "word-extractor": "^1.0.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/diff": "^6.0.0",
+    "@types/fast-levenshtein": "^0.0.4",
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.0.0",
+    "@types/word-extractor": "^1.0.6",
+    "lucide-react": "^0.468.0",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/un-fck/undifferent"
+  },
+  "license": "MIT",
+  "overrides": {
+    "tar": "^7.5.3"
+  },
+  "keywords": [
+    "diff",
+    "un",
+    "united-nations",
+    "document-comparison"
+  ]
+}
