@@ -5,7 +5,7 @@ A diff algorithm and viewer for comparing documents, with special support for UN
 ## Installation
 
 ```bash
-npm install github:un-fck/undifferent
+npm install github:un-eosg-analytics/undifferent
 ```
 
 ## Usage
