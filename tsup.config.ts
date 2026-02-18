@@ -9,5 +9,6 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   clean: true,
+  tsconfig: 'tsconfig.lib.json',
   external: ['react', 'react-dom'],
 })
