@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { DiffItem } from './DiffItem'
-import type { DiffItem as DiffItemType } from '../core'
+import React from "react";
+import { DiffItem } from "./DiffItem";
+import type { DiffItem as DiffItemType } from "../core";
 
 export interface ComparisonProps {
-  item: DiffItemType
-  className?: string
-  gap?: string
+  item: DiffItemType;
+  className?: string;
+  gap?: string;
 }
 
 /**
@@ -16,26 +16,26 @@ export interface ComparisonProps {
  */
 export function Comparison({
   item,
-  className = '',
-  gap = '1rem',
+  className = "",
+  gap = "1rem",
 }: ComparisonProps) {
-  const isAdded = item.right && !item.left && !item.leftBest
-  const isRemoved = item.left && !item.right && !item.rightBest
+  const isAdded = item.right && !item.left && !item.leftBest;
+  const isRemoved = item.left && !item.right && !item.rightBest;
 
   return (
     <div
       className={className}
       style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
         gap,
-        width: '100%',
+        width: "100%",
       }}
     >
       {item.left ? (
         <DiffItem
           content={isRemoved ? item.left : item.leftHighlighted}
-          color={isRemoved ? 'red' : undefined}
+          color={isRemoved ? "red" : undefined}
         />
       ) : (
         <DiffItem content={item.leftHighlighted} />
@@ -43,11 +43,11 @@ export function Comparison({
       {item.right ? (
         <DiffItem
           content={isAdded ? item.right : item.rightHighlighted}
-          color={isAdded ? 'lightgreen' : undefined}
+          color={isAdded ? "lightgreen" : undefined}
         />
       ) : (
         <DiffItem content={item.rightHighlighted} />
       )}
     </div>
-  )
+  );
 }

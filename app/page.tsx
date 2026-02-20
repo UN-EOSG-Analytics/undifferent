@@ -76,7 +76,11 @@ function HomeContent() {
     if (symbolB.trim()) parts.push(`symbol2=${encodeSymbol(symbolB)}`);
     // Use pushState directly — router.push re-encodes query param values
     // and would turn A/RES/60/152 back into A%2FRES%2F60%2F152.
-    window.history.pushState(null, "", parts.length ? `/?${parts.join("&")}` : "/");
+    window.history.pushState(
+      null,
+      "",
+      parts.length ? `/?${parts.join("&")}` : "/",
+    );
   };
 
   useEffect(() => {
@@ -135,14 +139,14 @@ function HomeContent() {
 
   return (
     <main className="bg-gray-50 py-6">
-      <div className="mx-auto max-w-6xl px-6 space-y-6">
+      <div className="mx-auto max-w-6xl space-y-6 px-6">
         {!hasQueryParams && (
           <div className="space-y-6">
             {/* Input Section */}
-            <div className="rounded-lg bg-white p-6 mt-12 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold flex items-center gap-2">
+            <div className="mt-12 rounded-lg bg-white p-6 shadow-sm">
+              <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold">
                 Compare Documents
-                <span className="rounded-full bg-[#009edb]/10 px-2 py-0.5 text-xs font-medium text-[#009edb] tracking-wide">
+                <span className="rounded-full bg-[#009edb]/10 px-2 py-0.5 text-xs font-medium tracking-wide text-[#009edb]">
                   BETA
                 </span>
               </h2>
@@ -218,12 +222,16 @@ function HomeContent() {
                       <div className="flex items-center gap-2 text-sm">
                         <span className="font-mono text-[#009edb]">
                           {example.symbol1}{" "}
-                          <span className="text-gray-400 font-normal">({example.year1})</span>
+                          <span className="font-normal text-gray-400">
+                            ({example.year1})
+                          </span>
                         </span>
                         <span className="text-gray-500">vs</span>
                         <span className="font-mono text-[#009edb]">
                           {example.symbol2}{" "}
-                          <span className="text-gray-400 font-normal">({example.year2})</span>
+                          <span className="font-normal text-gray-400">
+                            ({example.year2})
+                          </span>
                         </span>
                       </div>
                       <svg

@@ -3,7 +3,7 @@ interface UNDocument {
     text: string;
     lines: string[];
     lineCount: number;
-    format: 'doc' | 'pdf';
+    format: "doc" | "pdf";
 }
 interface UNDocumentMetadata {
     symbol: string;

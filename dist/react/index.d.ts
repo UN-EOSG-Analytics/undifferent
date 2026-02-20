@@ -1,6 +1,6 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
 import { b as DiffResult, D as DiffItem$1 } from '../diff-DpdOk6Nu.js';
-import { a as UNDocumentMetadata } from '../fetcher-VMD_ec_L.js';
+import { a as UNDocumentMetadata } from '../fetcher-CpJLlun5.js';
 import React from 'react';
 
 interface DiffViewerProps {
@@ -8,12 +8,12 @@ interface DiffViewerProps {
     left: {
         symbol: string;
         metadata?: UNDocumentMetadata;
-        format?: 'doc' | 'pdf';
+        format?: "doc" | "pdf";
     };
     right: {
         symbol: string;
         metadata?: UNDocumentMetadata;
-        format?: 'doc' | 'pdf';
+        format?: "doc" | "pdf";
     };
     className?: string;
 }
@@ -25,7 +25,7 @@ declare function DiffViewer({ data, left, right, className, }: DiffViewerProps):
 interface DocumentHeaderProps {
     symbol: string;
     metadata?: UNDocumentMetadata;
-    format?: 'doc' | 'pdf';
+    format?: "doc" | "pdf";
     className?: string;
 }
 /**
@@ -46,14 +46,14 @@ declare function Comparison({ item, className, gap, }: ComparisonProps): react_j
 
 interface DiffItemProps {
     content: string;
-    color?: 'red' | 'lightgreen' | 'yellow' | 'blue';
+    color?: "red" | "lightgreen" | "yellow" | "blue";
     className?: string;
 }
 /**
  * Single diff item display component
  * Shows highlighted text with optional background color
  */
-declare function DiffItem({ content, color, className, }: DiffItemProps): react_jsx_runtime.JSX.Element;
+declare function DiffItem({ content, color, className }: DiffItemProps): react_jsx_runtime.JSX.Element;
 
 /**
  * Parse diff markup text and return React elements with styling

@@ -56,13 +56,10 @@ function parseHighlightedText(text) {
 
 // src/react/DiffItem.tsx
 import { jsx as jsx2 } from "react/jsx-runtime";
-function DiffItem({
-  content,
-  color,
-  className = ""
-}) {
+function DiffItem({ content, color, className = "" }) {
   const getColorStyle = () => {
-    if (!color) return content ? { backgroundColor: "var(--diff-item-bg, #fff)" } : {};
+    if (!color)
+      return content ? { backgroundColor: "var(--diff-item-bg, #fff)" } : {};
     switch (color) {
       case "red":
         return { backgroundColor: "var(--diff-removed-bg, #fef2f2)" };
@@ -145,11 +142,21 @@ function DocumentHeader({
   const pdfUrl = `https://documents.un.org/api/symbol/access?s=${encodeURIComponent(symbol)}&l=en&t=pdf`;
   return /* @__PURE__ */ jsxs2("div", { className, style: { textAlign: "left" }, children: [
     /* @__PURE__ */ jsx4("h3", { style: { fontSize: "1rem", fontWeight: 600, margin: 0 }, children: symbol }),
-    metadata?.date && /* @__PURE__ */ jsx4("p", { style: { marginTop: "0.25rem", fontSize: "0.875rem", color: "#4b5563" }, children: new Date(metadata.date).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    }) }),
+    metadata?.date && /* @__PURE__ */ jsx4(
+      "p",
+      {
+        style: {
+          marginTop: "0.25rem",
+          fontSize: "0.875rem",
+          color: "#4b5563"
+        },
+        children: new Date(metadata.date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        })
+      }
+    ),
     /* @__PURE__ */ jsx4(
       "a",
       {
@@ -168,14 +175,24 @@ function DocumentHeader({
         children: "View PDF \u2192"
       }
     ),
-    metadata?.vote && /* @__PURE__ */ jsxs2("p", { style: { marginTop: "0.25rem", fontSize: "0.75rem", color: "#6b7280" }, children: [
-      "Vote: ",
-      metadata.vote.inFavour,
-      "\u2013",
-      metadata.vote.against,
-      "\u2013",
-      metadata.vote.abstaining
-    ] }),
+    metadata?.vote && /* @__PURE__ */ jsxs2(
+      "p",
+      {
+        style: {
+          marginTop: "0.25rem",
+          fontSize: "0.75rem",
+          color: "#6b7280"
+        },
+        children: [
+          "Vote: ",
+          metadata.vote.inFavour,
+          "\u2013",
+          metadata.vote.against,
+          "\u2013",
+          metadata.vote.abstaining
+        ]
+      }
+    ),
     format === "pdf" && /* @__PURE__ */ jsxs2(
       "p",
       {
@@ -221,27 +238,40 @@ function DiffViewer({
   right,
   className = ""
 }) {
-  return /* @__PURE__ */ jsxs3("div", { className, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
-    /* @__PURE__ */ jsxs3("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }, children: [
-      /* @__PURE__ */ jsx5(
-        DocumentHeader,
-        {
-          symbol: left.symbol,
-          metadata: left.metadata,
-          format: left.format
-        }
-      ),
-      /* @__PURE__ */ jsx5(
-        DocumentHeader,
-        {
-          symbol: right.symbol,
-          metadata: right.metadata,
-          format: right.format
-        }
-      )
-    ] }),
-    /* @__PURE__ */ jsx5("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: data.items.map((item, index) => /* @__PURE__ */ jsx5(Comparison, { item }, index)) })
-  ] });
+  return /* @__PURE__ */ jsxs3(
+    "div",
+    {
+      className,
+      style: { display: "flex", flexDirection: "column", gap: "1rem" },
+      children: [
+        /* @__PURE__ */ jsxs3(
+          "div",
+          {
+            style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" },
+            children: [
+              /* @__PURE__ */ jsx5(
+                DocumentHeader,
+                {
+                  symbol: left.symbol,
+                  metadata: left.metadata,
+                  format: left.format
+                }
+              ),
+              /* @__PURE__ */ jsx5(
+                DocumentHeader,
+                {
+                  symbol: right.symbol,
+                  metadata: right.metadata,
+                  format: right.format
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsx5("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: data.items.map((item, index) => /* @__PURE__ */ jsx5(Comparison, { item }, index)) })
+      ]
+    }
+  );
 }
 export {
   Comparison,

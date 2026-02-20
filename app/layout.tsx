@@ -1,19 +1,19 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { Header } from './Header'
-import { Footer } from './Footer'
-import { AnimatedLogo } from './AnimatedLogo'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import type { Metadata } from "next";
+import "./globals.css";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { AnimatedLogo } from "./AnimatedLogo";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
-  title: 'UN Document Diff Viewer',
-  description: 'Compare and diff UN documents with highlighted changes',
-}
+  title: "UN Document Diff Viewer",
+  description: "Compare and diff UN documents with highlighted changes",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -25,5 +25,5 @@ export default function RootLayout({
       </body>
       <GoogleAnalytics gaId="G-0K4Z4DX9HZ" />
     </html>
-  )
+  );
 }

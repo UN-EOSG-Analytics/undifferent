@@ -10,7 +10,7 @@ async function fetchDocumentMetadata(symbol) {
   const response = await fetch(url, {
     headers: {
       "User-Agent": "curl/8.7.1",
-      "Accept": "*/*"
+      Accept: "*/*"
     }
   });
   if (!response.ok) {
@@ -22,44 +22,68 @@ async function fetchDocumentMetadata(symbol) {
     return { symbol, title: symbol, date: null, year: null, subjects: [] };
   }
   for (const record of recordMatches) {
-    const tag191Match = record.match(/<datafield tag="191"[^>]*>([\s\S]*?)<\/datafield>/);
+    const tag191Match = record.match(
+      /<datafield tag="191"[^>]*>([\s\S]*?)<\/datafield>/
+    );
     if (!tag191Match) continue;
-    const symbolSubfieldMatch = tag191Match[1].match(/<subfield code="a">([^<]+)<\/subfield>/);
+    const symbolSubfieldMatch = tag191Match[1].match(
+      /<subfield code="a">([^<]+)<\/subfield>/
+    );
     if (!symbolSubfieldMatch || symbolSubfieldMatch[1] !== symbol) {
       continue;
     }
-    const tag245Match = record.match(/<datafield tag="245"[^>]*>([\s\S]*?)<\/datafield>/);
+    const tag245Match = record.match(
+      /<datafield tag="245"[^>]*>([\s\S]*?)<\/datafield>/
+    );
     let title = symbol;
     if (tag245Match) {
-      const titleSubfieldMatch = tag245Match[1].match(/<subfield code="a">([^<]+)<\/subfield>/);
+      const titleSubfieldMatch = tag245Match[1].match(
+        /<subfield code="a">([^<]+)<\/subfield>/
+      );
       if (titleSubfieldMatch) {
         title = titleSubfieldMatch[1].replace(/ :$/, "").trim();
       }
     }
-    const tag269Match = record.match(/<datafield tag="269"[^>]*>([\s\S]*?)<\/datafield>/);
+    const tag269Match = record.match(
+      /<datafield tag="269"[^>]*>([\s\S]*?)<\/datafield>/
+    );
     let date = null;
     let year = null;
     if (tag269Match) {
-      const dateSubfieldMatch = tag269Match[1].match(/<subfield code="a">(\d{4}-\d{2}-\d{2})<\/subfield>/);
+      const dateSubfieldMatch = tag269Match[1].match(
+        /<subfield code="a">(\d{4}-\d{2}-\d{2})<\/subfield>/
+      );
       if (dateSubfieldMatch) {
         date = dateSubfieldMatch[1];
         year = parseInt(date.substring(0, 4));
       }
     }
     const subjects = [];
-    const tag650Matches = record.matchAll(/<datafield tag="650"[^>]*>([\s\S]*?)<\/datafield>/g);
+    const tag650Matches = record.matchAll(
+      /<datafield tag="650"[^>]*>([\s\S]*?)<\/datafield>/g
+    );
     for (const match of tag650Matches) {
-      const subjectMatch = match[1].match(/<subfield code="a">([^<]+)<\/subfield>/);
+      const subjectMatch = match[1].match(
+        /<subfield code="a">([^<]+)<\/subfield>/
+      );
       if (subjectMatch) {
         subjects.push(subjectMatch[1].trim());
       }
     }
     let vote = void 0;
-    const tag996Match = record.match(/<datafield tag="996"[^>]*>([\s\S]*?)<\/datafield>/);
+    const tag996Match = record.match(
+      /<datafield tag="996"[^>]*>([\s\S]*?)<\/datafield>/
+    );
     if (tag996Match) {
-      const inFavourMatch = tag996Match[1].match(/<subfield code="b">(\d+)<\/subfield>/);
-      const againstMatch = tag996Match[1].match(/<subfield code="c">(\d+)<\/subfield>/);
-      const abstainingMatch = tag996Match[1].match(/<subfield code="d">(\d+)<\/subfield>/);
+      const inFavourMatch = tag996Match[1].match(
+        /<subfield code="b">(\d+)<\/subfield>/
+      );
+      const againstMatch = tag996Match[1].match(
+        /<subfield code="c">(\d+)<\/subfield>/
+      );
+      const abstainingMatch = tag996Match[1].match(
+        /<subfield code="d">(\d+)<\/subfield>/
+      );
       if (inFavourMatch || againstMatch || abstainingMatch) {
         vote = {
           inFavour: inFavourMatch ? parseInt(inFavourMatch[1]) : 0,
@@ -69,9 +93,13 @@ async function fetchDocumentMetadata(symbol) {
       }
     }
     let agendaInfo = void 0;
-    const tag991Match = record.match(/<datafield tag="991"[^>]*>([\s\S]*?)<\/datafield>/);
+    const tag991Match = record.match(
+      /<datafield tag="991"[^>]*>([\s\S]*?)<\/datafield>/
+    );
     if (tag991Match) {
-      const agendaMatch = tag991Match[1].match(/<subfield code="[de]">([^<]+)<\/subfield>/);
+      const agendaMatch = tag991Match[1].match(
+        /<subfield code="[de]">([^<]+)<\/subfield>/
+      );
       if (agendaMatch) {
         agendaInfo = agendaMatch[1].trim();
       }

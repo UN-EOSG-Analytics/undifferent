@@ -1,24 +1,24 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Comparison } from './Comparison'
-import { DocumentHeader } from './DocumentHeader'
-import type { DiffResult } from '../core'
-import type { UNDocumentMetadata } from '../un-fetcher'
+import React from "react";
+import { Comparison } from "./Comparison";
+import { DocumentHeader } from "./DocumentHeader";
+import type { DiffResult } from "../core";
+import type { UNDocumentMetadata } from "../un-fetcher";
 
 export interface DiffViewerProps {
-  data: DiffResult
+  data: DiffResult;
   left: {
-    symbol: string
-    metadata?: UNDocumentMetadata
-    format?: 'doc' | 'pdf'
-  }
+    symbol: string;
+    metadata?: UNDocumentMetadata;
+    format?: "doc" | "pdf";
+  };
   right: {
-    symbol: string
-    metadata?: UNDocumentMetadata
-    format?: 'doc' | 'pdf'
-  }
-  className?: string
+    symbol: string;
+    metadata?: UNDocumentMetadata;
+    format?: "doc" | "pdf";
+  };
+  className?: string;
 }
 
 /**
@@ -28,12 +28,17 @@ export function DiffViewer({
   data,
   left,
   right,
-  className = '',
+  className = "",
 }: DiffViewerProps) {
   return (
-    <div className={className} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div
+      className={className}
+      style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+    >
       {/* Document Headers */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+      <div
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}
+      >
         <DocumentHeader
           symbol={left.symbol}
           metadata={left.metadata}
@@ -47,11 +52,11 @@ export function DiffViewer({
       </div>
 
       {/* Diff items */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {data.items.map((item, index) => (
           <Comparison key={index} item={item} />
         ))}
       </div>
     </div>
-  )
+  );
 }

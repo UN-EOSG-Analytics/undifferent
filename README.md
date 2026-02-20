@@ -15,19 +15,19 @@ npm install github:un-eosg-analytics/undifferent
 The core module provides a pure TypeScript diff algorithm with no React dependency:
 
 ```typescript
-import { diff, similarity, highlight } from 'undifferent/core'
+import { diff, similarity, highlight } from "undifferent/core";
 
 // Compare two arrays of lines
-const result = diff(linesA, linesB, { threshold: 0.8 })
+const result = diff(linesA, linesB, { threshold: 0.8 });
 
-console.log(result.score)  // Overall similarity (0-1)
-console.log(result.items)  // Array of diff items with highlighting
+console.log(result.score); // Overall similarity (0-1)
+console.log(result.items); // Array of diff items with highlighting
 
 // Calculate similarity between two strings
-const score = similarity('hello world', 'hello there')
+const score = similarity("hello world", "hello there");
 
 // Get highlighted diff markup
-const { left, right } = highlight('old text', 'new text')
+const { left, right } = highlight("old text", "new text");
 // left: "~~old~~ text"
 // right: "**new** text"
 ```
@@ -37,29 +37,29 @@ const { left, right } = highlight('old text', 'new text')
 The react module provides components for displaying diffs:
 
 ```tsx
-import { DiffViewer, Comparison, DiffItem } from 'undifferent/react'
-import type { DiffResult } from 'undifferent/core'
-import type { UNDocumentMetadata } from 'undifferent/un-fetcher'
+import { DiffViewer, Comparison, DiffItem } from "undifferent/react";
+import type { DiffResult } from "undifferent/core";
+import type { UNDocumentMetadata } from "undifferent/un-fetcher";
 
 // Full viewer with document headers (symbol, date, PDF link, vote)
-<DiffViewer 
+<DiffViewer
   data={diffResult}
   left={{
-    symbol: 'A/RES/77/16',
-    metadata: leftMetadata,  // UNDocumentMetadata from fetchDocumentMetadata
-    format: 'doc',           // 'doc' | 'pdf'
+    symbol: "A/RES/77/16",
+    metadata: leftMetadata, // UNDocumentMetadata from fetchDocumentMetadata
+    format: "doc", // 'doc' | 'pdf'
   }}
   right={{
-    symbol: 'A/RES/79/326',
+    symbol: "A/RES/79/326",
     metadata: rightMetadata,
-    format: 'doc',
+    format: "doc",
   }}
-/>
+/>;
 
 // Or build your own UI with individual components
-{diffResult.items.map((item, i) => (
-  <Comparison key={i} item={item} />
-))}
+{
+  diffResult.items.map((item, i) => <Comparison key={i} item={item} />);
+}
 ```
 
 ### UN Document Fetching
@@ -67,20 +67,21 @@ import type { UNDocumentMetadata } from 'undifferent/un-fetcher'
 The un-fetcher module provides utilities for fetching UN documents (server-side only):
 
 ```typescript
-import { fetchUNDocument, fetchDocumentMetadata } from 'undifferent/un-fetcher'
+import { fetchUNDocument, fetchDocumentMetadata } from "undifferent/un-fetcher";
 
 // Fetch a UN document by symbol
-const doc = await fetchUNDocument('A/RES/77/16')
-console.log(doc.lines)    // Array of text lines
-console.log(doc.format)   // 'doc' or 'pdf'
+const doc = await fetchUNDocument("A/RES/77/16");
+console.log(doc.lines); // Array of text lines
+console.log(doc.format); // 'doc' or 'pdf'
 
 // Fetch document metadata from UN Digital Library
-const meta = await fetchDocumentMetadata('A/HRC/RES/50/13')
-console.log(meta.title)     // "Access to medicines, vaccines..."
-console.log(meta.date)      // "2022-07-14"
-console.log(meta.year)      // 2022
-console.log(meta.subjects)  // ["RIGHT TO HEALTH", "VACCINES", ...]
-console.log(meta.vote)      // { inFavour: 29, against: 15, abstaining: 3 }
+const meta = await fetchDocumentMe;
+tadata("A/HRC/RES/50/13");
+console.log(meta.title); // "Access to medicines, vaccines..."
+console.log(meta.date); // "2022-07-14"
+console.log(meta.year); // 2022
+console.log(meta.subjects); // ["RIGHT TO HEALTH", "VACCINES", ...]
+console.log(meta.vote); // { inFavour: 29, against: 15, abstaining: 3 }
 ```
 
 ## Styling
@@ -142,6 +143,7 @@ undifferent/
 ```
 
 **IMPORTANT:** The `app/` directory is only a demo. All features, UI components, and logic should be implemented in `src/` (the library). The app should only:
+
 - Provide example comparisons
 - Call the API and pass data to library components
 - Handle routing/navigation

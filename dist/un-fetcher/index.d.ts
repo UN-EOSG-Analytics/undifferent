@@ -1,10 +1,10 @@
-export { U as UNDocument, a as UNDocumentMetadata, f as fetchDocumentMetadata, b as fetchUNDocument } from '../fetcher-VMD_ec_L.js';
+export { U as UNDocument, a as UNDocumentMetadata, f as fetchDocumentMetadata, b as fetchUNDocument } from '../fetcher-CpJLlun5.js';
 
 interface ParsedSymbol {
     body: string;
     session: number | null;
     number: number | null;
-    type: 'resolution' | 'document' | 'unknown';
+    type: "resolution" | "document" | "unknown";
 }
 /**
  * Parse a UN document symbol into its components
