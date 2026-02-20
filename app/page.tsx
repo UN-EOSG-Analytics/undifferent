@@ -153,7 +153,7 @@ function HomeContent() {
               </h2>
               <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-gray-500">
+                  <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500 uppercase">
                     Document Symbol 1
                   </label>
                   <input
@@ -165,7 +165,7 @@ function HomeContent() {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-gray-500">
+                  <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500 uppercase">
                     Document Symbol 2
                   </label>
                   <input
