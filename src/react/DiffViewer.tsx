@@ -103,9 +103,11 @@ export function DiffViewer({
           >
             <a
               href={(() => {
-                const p = new URLSearchParams(window.location.search);
-                p.set("index", String(index + 1));
-                return `?${p.toString()}`;
+                const s = window.location.search;
+                if (!s) return `?index=${index + 1}`;
+                return /[?&]index=/.test(s)
+                  ? s.replace(/([?&]index=)[^&]*/, `$1${index + 1}`)
+                  : `${s}&index=${index + 1}`;
               })()}
               className="diff-row-anchor"
               aria-label={`Paragraph ${index + 1}`}
@@ -113,10 +115,14 @@ export function DiffViewer({
               onClick={(e) => {
                 e.preventDefault();
                 const n = index + 1;
-                const params = new URLSearchParams(window.location.search);
-                params.set("index", String(n));
-                const newUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
-                history.pushState(null, "", `?${params.toString()}`);
+                const s = window.location.search;
+                const newSearch = !s
+                  ? `?index=${n}`
+                  : /[?&]index=/.test(s)
+                    ? s.replace(/([?&]index=)[^&]*/, `$1${n}`)
+                    : `${s}&index=${n}`;
+                const newUrl = `${window.location.origin}${window.location.pathname}${newSearch}`;
+                history.pushState(null, "", newSearch);
                 navigator.clipboard?.writeText(newUrl);
                 setActiveIndex(n);
                 const el = document.getElementById(String(n));
