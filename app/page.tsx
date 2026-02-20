@@ -96,16 +96,16 @@ function HomeContent() {
 
   const exampleComparisons = [
     {
+      symbol1: "A/RES/77/29",
+      year1: "2022",
+      symbol2: "A/RES/78/120",
+      year2: "2023",
+    },
+    {
       symbol1: "A/RES/78/14",
       year1: "2023",
       symbol2: "A/RES/79/15",
       year2: "2024",
-    },
-    {
-      symbol1: "A/RES/60/152",
-      year1: "2005",
-      symbol2: "A/RES/61/156",
-      year2: "2006",
     },
     {
       symbol1: "A/RES/77/157",
@@ -155,7 +155,7 @@ function HomeContent() {
                     type="text"
                     value={symbol1}
                     onChange={(e) => setSymbol1(e.target.value)}
-                    placeholder="e.g., A/RES/77/16"
+                    placeholder="e.g., A/RES/77/29"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#009edb] focus:ring-1 focus:ring-[#009edb] focus:outline-none"
                   />
                 </div>
@@ -167,7 +167,7 @@ function HomeContent() {
                     type="text"
                     value={symbol2}
                     onChange={(e) => setSymbol2(e.target.value)}
-                    placeholder="e.g., A/RES/79/326"
+                    placeholder="e.g., A/RES/78/120"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#009edb] focus:ring-1 focus:ring-[#009edb] focus:outline-none"
                   />
                 </div>

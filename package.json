@@ -23,7 +23,8 @@
   "scripts": {
     "build:lib": "tsup",
     "build": "tsup && next build",
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint": "next lint"
   },
   "peerDependencies": {
     "react": ">=18"
