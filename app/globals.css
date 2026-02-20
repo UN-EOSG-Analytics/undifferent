@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-un-blue: #009edb;
+}
+
 :root {
   --diff-toggle-active-bg: #009edb;
   --diff-toggle-active-text: white;

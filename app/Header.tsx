@@ -17,12 +17,12 @@ export function Header() {
 
         <Link
           href="/"
-          className="text-xl font-bold transition-colors hover:text-[#009edb]"
+          className="text-xl font-bold transition-colors hover:text-un-blue"
         >
           UN Document Comparison
         </Link>
         <svg
-          className="h-5 w-5 text-[#009edb]"
+          className="h-5 w-5 text-un-blue"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

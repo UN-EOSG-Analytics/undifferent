@@ -167,7 +167,7 @@ function DocumentHeader({
           display: "inline-block",
           marginTop: "0.25rem",
           fontSize: "0.875rem",
-          color: "#009edb",
+          color: "var(--color-un-blue)",
           textDecoration: "none"
         },
         onMouseEnter: (e) => e.currentTarget.style.textDecoration = "underline",

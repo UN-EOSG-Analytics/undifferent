@@ -147,7 +147,7 @@ function HomeContent() {
             <div className="mt-12 rounded-lg bg-white p-6 shadow-sm">
               <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold">
                 Compare Documents
-                <span className="rounded-full bg-[#009edb]/10 px-2 py-0.5 text-xs font-medium tracking-wide text-[#009edb]">
+                <span className="rounded-full bg-un-blue/10 px-2 py-0.5 text-xs font-medium tracking-wide text-un-blue">
                   BETA
                 </span>
               </h2>
@@ -161,7 +161,7 @@ function HomeContent() {
                     value={symbol1}
                     onChange={(e) => setSymbol1(e.target.value)}
                     placeholder="e.g., A/RES/77/29"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#009edb] focus:ring-1 focus:ring-[#009edb] focus:outline-none"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-un-blue focus:ring-1 focus:ring-un-blue focus:outline-none"
                   />
                 </div>
                 <div>
@@ -173,7 +173,7 @@ function HomeContent() {
                     value={symbol2}
                     onChange={(e) => setSymbol2(e.target.value)}
                     placeholder="e.g., A/RES/78/120"
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-[#009edb] focus:ring-1 focus:ring-[#009edb] focus:outline-none"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-un-blue focus:ring-1 focus:ring-un-blue focus:outline-none"
                   />
                 </div>
               </div>
@@ -184,7 +184,7 @@ function HomeContent() {
                   fetchDiff();
                 }}
                 disabled={loading || !symbol1.trim() || !symbol2.trim()}
-                className="flex items-center gap-2 rounded-md bg-[#009edb] px-4 py-2 text-white transition-colors hover:bg-[#007ab8] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex items-center gap-2 rounded-md bg-un-blue px-4 py-2 text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <svg
                   className="h-4 w-4"
@@ -217,18 +217,18 @@ function HomeContent() {
                   <a
                     key={index}
                     href={`/?symbol1=${encodeSymbol(example.symbol1)}&symbol2=${encodeSymbol(example.symbol2)}`}
-                    className="group block rounded-lg border border-gray-200 p-3 transition-colors hover:border-[#009edb] hover:bg-blue-50"
+                    className="group block rounded-lg border border-gray-200 p-3 transition-colors hover:border-un-blue hover:bg-blue-50"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-sm">
-                        <span className="font-mono text-[#009edb]">
+                        <span className="font-mono text-un-blue">
                           {example.symbol1}{" "}
                           <span className="font-normal text-gray-400">
                             ({example.year1})
                           </span>
                         </span>
                         <span className="text-gray-500">vs</span>
-                        <span className="font-mono text-[#009edb]">
+                        <span className="font-mono text-un-blue">
                           {example.symbol2}{" "}
                           <span className="font-normal text-gray-400">
                             ({example.year2})
@@ -236,7 +236,7 @@ function HomeContent() {
                         </span>
                       </div>
                       <svg
-                        className="h-4 w-4 shrink-0 text-gray-400 group-hover:text-[#009edb]"
+                        className="h-4 w-4 shrink-0 text-gray-400 group-hover:text-un-blue"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -281,7 +281,7 @@ function HomeContent() {
         {hasQueryParams && loading && !diffData && (
           <div className="py-8 text-center">
             <div className="inline-flex items-center gap-2 text-gray-600">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#009edb]"></div>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue"></div>
               Loading comparison...
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function Home() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="py-8 text-center">
               <div className="inline-flex items-center gap-2 text-gray-600">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#009edb]"></div>
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue"></div>
                 Loading...
               </div>
             </div>
