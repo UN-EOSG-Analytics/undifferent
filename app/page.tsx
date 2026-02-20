@@ -161,6 +161,19 @@ function HomeContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
+  // Scroll to the indexed paragraph after diff data loads
+  useEffect(() => {
+    if (!loading && diffData) {
+      const idx = new URLSearchParams(window.location.search).get("index");
+      if (idx) {
+        requestAnimationFrame(() => {
+          const el = document.getElementById(idx);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      }
+    }
+  }, [loading, diffData]);
+
   const hasQueryParams =
     searchParams.get("symbol1") || searchParams.get("symbol2");
 

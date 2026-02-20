@@ -1,10 +1,11 @@
 ## App
 
-- test edge cases
 - symbol autocomplete?
-- allow changing on the diff page?
-- series timeline?
+- allow changing symbols on the diff page?
+- series timeline, progressive diff?
+- heatmap on scrollbar
 
 ## Library
 
+- test edge cases
 - validate
