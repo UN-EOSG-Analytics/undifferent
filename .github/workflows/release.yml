@@ -1,0 +1,53 @@
+name: Build & Release Library
+
+# Rebuilds dist/ and force-pushes to the `release` branch whenever library
+# source changes on main. Consumers install from the release branch:
+#   npm install github:un-eosg-analytics/undifferent#release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tsup.config.ts"
+      - "tsconfig.lib.json"
+      - "package.json"
+      - "pnpm-lock.yaml"
+  workflow_dispatch: # allow manual trigger from the Actions tab
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build library
+        run: pnpm build:lib
+
+      - name: Push dist/ to release branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Switch to (or create) the release branch tracking main
+          git checkout -B release
+          # Force-stage dist/ even though it's in .gitignore (it isn't, but safety)
+          git add -f dist/
+          git commit -m "chore: build dist [skip ci]
+
+          Built from main@${{ github.sha }}"
+          git push origin release --force

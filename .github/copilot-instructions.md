@@ -41,7 +41,7 @@ pnpm typecheck     # tsc --noEmit (catches type errors without emitting)
 - Marked `server-only` – never import in client components or `src/react/`
 - `fetchUNDocument(symbol)` – tries `documents.un.org/api/symbol/access` for Word (.doc) and PDF; uses `word-extractor` / `unpdf` for text extraction; writes temp files to `os.tmpdir()` for Word parsing
 - `fetchDocumentMetadata(symbol)` – queries the UN Digital Library OAI-PMH XML endpoint; **must use `User-Agent: curl/8.7.1`** to bypass AWS WAF
-- `parseUNSymbol(symbol)` – parses symbols like `A/RES/77/16` into `{ body, session, number, type }`; session→year heuristic only reliable for GA resolutions (session N = 1945+N)
+- `parseUNSymbol(symbol)` – parses symbols like `A/RES/79/1` into `{ body, session, number, type }`; session→year heuristic only reliable for GA resolutions (session N = 1945+N)
 
 ## React Components (`src/react/`)
 
@@ -55,9 +55,24 @@ pnpm typecheck     # tsc --noEmit (catches type errors without emitting)
 
 ## Demo App Patterns (`app/`)
 
-- `page.tsx` uses `window.history.pushState` instead of Next.js router to preserve `/` characters in UN symbols (e.g., `A/RES/60/152`) – `router.push` would re-encode slashes
-- URL params: `?symbol1=A/RES/77/16&symbol2=A/RES/79/326`
+- `page.tsx` uses `window.history.pushState` instead of Next.js router to preserve `/` characters in UN symbols (e.g., `A/RES/79/1`) – `router.push` would re-encode slashes
+- URL params: `?symbol1=A/RES/77/16&symbol2=A/RES/79/1`
 - The diff is fetched client-side via `POST /api/diff` with `{ symbolA, symbolB }` in the body
+
+## Library Backwards Compatibility
+
+The package is installed by external consumers via `npm install github:un-eosg-analytics/undifferent#release`. **Changes to `src/` can break those downstream projects**, not just the Vercel app.
+
+The `release` branch is maintained automatically by `.github/workflows/release.yml`, which rebuilds `dist/` via tsup and force-pushes to `release` whenever `src/`, `tsup.config.ts`, `tsconfig.lib.json`, `package.json`, or `pnpm-lock.yaml` change on `main`. Never push to the `release` branch manually.
+
+Before modifying anything under `src/`:
+
+- **Exported types** (`DiffItem`, `DiffResult`, `UNDocument`, `UNDocumentMetadata`, `ParsedSymbol`, etc.) – adding optional fields is safe; removing or renaming fields is a breaking change
+- **Exported function signatures** – adding optional parameters is safe; changing existing parameter types or return shapes is breaking
+- **CSS variable names** in `src/react/` – renaming them breaks consumers who have set those variables in their own stylesheets
+- **Sub-path exports** (`undifferent/core`, `undifferent/react`, `undifferent/un-fetcher`) – never remove or rename these
+
+App-only changes (`app/`, `app/api/`) do not affect library consumers and can be made freely.
 
 ## Conventions
 
