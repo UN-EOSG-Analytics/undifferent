@@ -3,6 +3,7 @@ import './globals.css'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { AnimatedLogo } from './AnimatedLogo'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: 'UN Document Diff Viewer',
@@ -22,6 +23,7 @@ export default function RootLayout({
         <Footer />
         <AnimatedLogo />
       </body>
+      <GoogleAnalytics gaId="G-0K4Z4DX9HZ" />
     </html>
   )
 }
