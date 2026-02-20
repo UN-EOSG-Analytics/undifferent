@@ -39,7 +39,11 @@ export function DiffViewer({
     >
       {/* Document Headers */}
       <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "0.75rem",
+        }}
       >
         <DocumentHeader
           symbol={left.symbol}

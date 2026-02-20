@@ -14,7 +14,12 @@ export interface DiffItemProps {
  * Single diff item display component
  * Shows highlighted text with optional background color
  */
-export function DiffItem({ content, color, className = "", searchQuery }: DiffItemProps) {
+export function DiffItem({
+  content,
+  color,
+  className = "",
+  searchQuery,
+}: DiffItemProps) {
   const getColorStyle = () => {
     if (!color)
       return content ? { backgroundColor: "var(--diff-item-bg, #fff)" } : {};
@@ -46,7 +51,9 @@ export function DiffItem({ content, color, className = "", searchQuery }: DiffIt
         ...getColorStyle(),
       }}
     >
-      <div style={{ width: "100%" }}>{parseHighlightedText(content || "", searchQuery)}</div>
+      <div style={{ width: "100%" }}>
+        {parseHighlightedText(content || "", searchQuery)}
+      </div>
     </div>
   );
 }

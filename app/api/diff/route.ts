@@ -1,9 +1,24 @@
+import { unstable_cache } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { diff } from "../../../src/core";
 import {
   fetchUNDocument,
   fetchDocumentMetadata,
 } from "../../../src/un-fetcher";
+
+// Documents are immutable — cache forever (cleared on redeploy)
+const cachedFetchDocument = unstable_cache(
+  (symbol: string) => fetchUNDocument(symbol),
+  ["un-doc"],
+  { revalidate: false },
+);
+
+// Metadata rarely changes — revalidate once per day
+const cachedFetchMetadata = unstable_cache(
+  (symbol: string) => fetchDocumentMetadata(symbol),
+  ["un-meta"],
+  { revalidate: 86400 },
+);
 
 export async function POST(request: NextRequest) {
   try {
@@ -16,12 +31,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch documents and metadata from UN API
+    // Fetch documents and metadata from UN API (results cached per symbol)
     const [docA, docB, metaA, metaB] = await Promise.all([
-      fetchUNDocument(symbolA),
-      fetchUNDocument(symbolB),
-      fetchDocumentMetadata(symbolA),
-      fetchDocumentMetadata(symbolB),
+      cachedFetchDocument(symbolA),
+      cachedFetchDocument(symbolB),
+      cachedFetchMetadata(symbolA),
+      cachedFetchMetadata(symbolB),
     ]);
 
     const result = diff(docA.lines, docB.lines);
