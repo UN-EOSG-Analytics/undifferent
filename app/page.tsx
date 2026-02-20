@@ -22,10 +22,10 @@ function HomeContent() {
   const router = useRouter()
 
   const [symbol1, setSymbol1] = useState(
-    searchParams.get('symbol1') || 'A/RES/60/152'
+    searchParams.get('symbol1') || ''
   )
   const [symbol2, setSymbol2] = useState(
-    searchParams.get('symbol2') || 'A/RES/61/156'
+    searchParams.get('symbol2') || ''
   )
   const [diffData, setDiffData] = useState<DiffResponse | null>(null)
   const [loading, setLoading] = useState(false)
@@ -102,31 +102,19 @@ function HomeContent() {
   ]
 
   return (
-    <main className="min-h-screen bg-gray-50 p-6">
-      <div className="mx-auto max-w-6xl space-y-6">
-        {/* Title */}
-        <h1 className="flex items-center gap-3 text-2xl font-bold">
-          <svg className="h-6 w-6 text-[#009edb]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-          </svg>
-          {hasQueryParams ? (
-            <button
-              onClick={() => router.push('/')}
-              className="cursor-pointer transition-colors hover:text-[#009edb]"
-              title="Return to start page"
-            >
-              Document Comparison
-            </button>
-          ) : (
-            <span>Document Comparison</span>
-          )}
-        </h1>
+    <main className="bg-gray-50 py-6">
+      <div className="mx-auto max-w-6xl px-6 space-y-6">
 
         {!hasQueryParams && (
           <div className="space-y-6">
             {/* Input Section */}
-            <div className="rounded-lg bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold">Compare Documents</h2>
+            <div className="rounded-lg bg-white p-6 mt-12 shadow-sm">
+              <h2 className="mb-4 text-lg font-semibold flex items-center gap-2">
+                Compare Documents
+                <span className="rounded-full bg-[#009edb]/10 px-2 py-0.5 text-xs font-medium text-[#009edb] tracking-wide">
+                  BETA
+                </span>
+              </h2>
               <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -171,8 +159,8 @@ function HomeContent() {
 
             {/* Example Comparisons */}
             <div className="rounded-lg bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-semibold">Example Comparisons</h2>
-              <p className="mb-4 text-sm text-gray-600">
+              <h2 className="mb-1 text-lg font-semibold">Example Comparisons</h2>
+              <p className="mb-5 text-sm text-gray-600">
                 Click on any comparison below to see how documents have evolved over time:
               </p>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -241,8 +229,8 @@ function HomeContent() {
 export default function Home() {
   return (
     <Suspense fallback={
-      <main className="min-h-screen bg-gray-50 p-6">
-        <div className="mx-auto max-w-6xl">
+      <main className="bg-gray-50 py-6">
+        <div className="mx-auto max-w-6xl px-6">
           <div className="py-8 text-center">
             <div className="inline-flex items-center gap-2 text-gray-600">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-[#009edb]"></div>

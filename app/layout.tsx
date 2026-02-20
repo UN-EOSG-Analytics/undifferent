@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { Header } from './Header'
+import { Footer } from './Footer'
+import { AnimatedLogo } from './AnimatedLogo'
 
 export const metadata: Metadata = {
   title: 'UN Document Diff Viewer',
@@ -13,7 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col">
+        <Header />
+        <div className="flex-1">{children}</div>
+        <Footer />
+        <AnimatedLogo />
+      </body>
     </html>
   )
 }
