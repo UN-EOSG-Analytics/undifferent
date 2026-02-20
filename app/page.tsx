@@ -264,20 +264,24 @@ function HomeContent() {
                 disabled={loading || !symbol1.trim() || !symbol2.trim()}
                 className="flex items-center gap-2 rounded-md bg-un-blue px-4 py-2 text-white transition-opacity hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                {loading ? "Loading..." : "Compare Documents"}
+                {loading ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                ) : (
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                )}
+                Compare Documents
               </button>
             </div>
 
@@ -470,10 +474,7 @@ function HomeContent() {
 
         {hasQueryParams && loading && !diffData && (
           <div className="py-8 text-center">
-            <div className="inline-flex items-center gap-2 text-gray-600">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue"></div>
-              Loading comparison...
-            </div>
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue mx-auto" />
           </div>
         )}
       </div>
@@ -481,22 +482,121 @@ function HomeContent() {
   );
 }
 
-export default function Home() {
+function HomeFallback() {
   return (
-    <Suspense
-      fallback={
-        <main className="bg-gray-50 py-6">
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="py-8 text-center">
-              <div className="inline-flex items-center gap-2 text-gray-600">
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue"></div>
-                Loading...
+    <main className="bg-gray-50 py-6">
+      <div className="mx-auto max-w-6xl space-y-6 px-6">
+        <div className="space-y-6">
+          <div className="mt-12 rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+              Compare Documents
+              <span className="rounded-full bg-un-blue/10 px-2 py-0.5 text-xs font-medium tracking-wide text-un-blue">
+                BETA
+              </span>
+            </h2>
+            <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div>
+                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  Document Symbol 1
+                </label>
+                <input
+                  type="text"
+                  defaultValue=""
+                  placeholder="e.g., A/RES/77/29"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-un-blue focus:ring-1 focus:ring-un-blue focus:outline-none"
+                  readOnly
+                />
+              </div>
+              <div>
+                <label className="mb-1.5 block text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  Document Symbol 2
+                </label>
+                <input
+                  type="text"
+                  defaultValue=""
+                  placeholder="e.g., A/RES/78/120"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-un-blue focus:ring-1 focus:ring-un-blue focus:outline-none"
+                  readOnly
+                />
               </div>
             </div>
+            <button
+              disabled
+              className="flex items-center gap-2 rounded-md bg-un-blue px-4 py-2 text-white opacity-50"
+            >
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Compare Documents
+            </button>
           </div>
-        </main>
-      }
-    >
+
+          {/* Example Comparisons */}
+          <div className="rounded-lg bg-white p-6 shadow-sm">
+            <h2 className="mb-1 text-lg font-semibold">Example Comparisons</h2>
+            <p className="mb-5 text-sm text-gray-600">
+              Click on any comparison below to see how documents have evolved
+              over time:
+            </p>
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              {[
+                { symbol1: "A/RES/77/29", year1: "2022", symbol2: "A/RES/78/120", year2: "2023" },
+                { symbol1: "A/RES/78/14", year1: "2023", symbol2: "A/RES/79/15", year2: "2024" },
+                { symbol1: "A/RES/77/157", year1: "2022", symbol2: "A/RES/78/143", year2: "2023" },
+                { symbol1: "A/RES/62/22", year1: "2007", symbol2: "A/RES/63/66", year2: "2008" },
+                { symbol1: "A/RES/77/18", year1: "2022", symbol2: "A/RES/79/9", year2: "2024" },
+                { symbol1: "A/HRC/RES/50/13", year1: "2022", symbol2: "A/HRC/RES/59/7", year2: "2025" },
+              ].map((ex, i) => (
+                <a
+                  key={i}
+                  href={`/?symbol1=${encodeURIComponent(ex.symbol1).replace(/%2F/gi, "/")}&symbol2=${encodeURIComponent(ex.symbol2).replace(/%2F/gi, "/")}`}
+                  className="group block rounded-lg border border-gray-200 p-3 transition-colors hover:border-un-blue hover:bg-blue-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm">
+                      <span className="font-mono text-un-blue">
+                        {ex.symbol1}{" "}
+                        <span className="font-normal text-gray-400">({ex.year1})</span>
+                      </span>
+                      <span className="text-gray-500">vs</span>
+                      <span className="font-mono text-un-blue">
+                        {ex.symbol2}{" "}
+                        <span className="font-normal text-gray-400">({ex.year2})</span>
+                      </span>
+                    </div>
+                    <svg
+                      className="h-4 w-4 shrink-0 text-gray-400 group-hover:text-un-blue"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<HomeFallback />}>
       <HomeContent />
     </Suspense>
   );
