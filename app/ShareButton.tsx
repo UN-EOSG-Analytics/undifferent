@@ -7,8 +7,7 @@ export function ShareButton() {
   const searchParams = useSearchParams();
   const [copied, setCopied] = useState(false);
 
-  const isVisible = searchParams.get("symbol1") && searchParams.get("symbol2");
-  if (!isVisible) return null;
+  const isVisible = !!(searchParams.get("symbol1") && searchParams.get("symbol2"));
 
   const handleShare = async () => {
     await navigator.clipboard.writeText(window.location.href);
@@ -19,7 +18,8 @@ export function ShareButton() {
   return (
     <button
       onClick={handleShare}
-      className={`ml-auto flex items-center gap-2 rounded-md bg-un-blue px-3 py-1.5 text-sm font-medium text-white transition-all ${copied ? "cursor-default" : "hover:opacity-80"}`}
+      aria-hidden={!isVisible}
+      className={`ml-auto flex items-center gap-2 rounded-md bg-un-blue px-3 py-1.5 text-sm font-medium text-white transition-all ${copied ? "cursor-default" : "hover:opacity-80"} ${isVisible ? "" : "invisible pointer-events-none"}`}
     >
       {copied ? (
         <>
