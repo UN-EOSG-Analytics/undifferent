@@ -473,8 +473,62 @@ function HomeContent() {
         )}
 
         {hasQueryParams && loading && !diffData && (
-          <div className="py-8 text-center">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-gray-300 border-t-un-blue mx-auto" />
+          <div className="flex min-h-[70vh] flex-col items-center justify-center gap-8">
+            {/* Two documents with animated comparison beam */}
+            <div className="relative flex items-center gap-2">
+              {/* Left doc */}
+              <div className="flex h-14 w-11 flex-col gap-1 rounded-md border-2 border-un-blue/30 bg-white p-1.5 shadow-sm">
+                <div className="h-1 w-full rounded-full bg-un-blue/20" />
+                <div className="h-1 w-4/5 rounded-full bg-un-blue/20" />
+                <div className="h-1 w-full rounded-full bg-un-blue/20" />
+                <div className="h-1 w-3/5 rounded-full bg-un-blue/20" />
+                <div className="h-1 w-full rounded-full bg-un-blue/20" />
+              </div>
+
+              {/* Animated beam */}
+              <div className="relative flex w-20 items-center justify-center">
+                {/* Track line */}
+                <div className="absolute h-px w-full bg-un-blue/15" />
+                {/* Travelling dot */}
+                <div
+                  className="absolute h-2 w-2 rounded-full bg-un-blue shadow-[0_0_6px_2px_#009edb66]"
+                  style={{ animation: "travel 1.4s ease-in-out infinite alternate" }}
+                />
+                {/* Arrows */}
+                <svg className="absolute left-0 h-3 w-3 text-un-blue/40" viewBox="0 0 12 12" fill="currentColor">
+                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                </svg>
+                <svg className="absolute right-0 h-3 w-3 text-un-blue/40 rotate-180" viewBox="0 0 12 12" fill="currentColor">
+                  <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                </svg>
+              </div>
+
+              {/* Right doc */}
+              <div className="flex h-14 w-11 flex-col gap-1 rounded-md border-2 border-un-blue/30 bg-white p-1.5 shadow-sm">
+                <div className="h-1 w-3/5 rounded-full bg-un-blue/20" />
+                <div className="h-1 w-full rounded-full bg-un-blue/20" />
+                <div className="h-1 w-4/5 rounded-full bg-un-blue/20" />
+                <div className="h-1 w-full rounded-full bg-un-blue/20" />
+                <div className="h-1 w-2/5 rounded-full bg-un-blue/20" />
+              </div>
+            </div>
+
+            {/* Label */}
+            <div className="flex flex-col items-center gap-1.5">
+              <p className="text-sm font-medium tracking-wide text-gray-700">
+                Comparing documents…
+              </p>
+              <p className="font-mono text-xs text-gray-400">
+                {symbol1} <span className="mx-1 text-gray-300">vs</span> {symbol2}
+              </p>
+            </div>
+
+            <style>{`
+              @keyframes travel {
+                from { transform: translateX(-28px); opacity: 0.4; }
+                to   { transform: translateX(28px);  opacity: 1; }
+              }
+            `}</style>
           </div>
         )}
       </div>

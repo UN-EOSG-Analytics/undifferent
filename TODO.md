@@ -1,3 +1,7 @@
+## General
+
+- add multilingual support
+
 ## App
 
 - symbol autocomplete?
