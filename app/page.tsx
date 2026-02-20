@@ -217,11 +217,13 @@ function HomeContent() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 text-sm">
                         <span className="font-mono text-[#009edb]">
-                          {example.symbol1} ({example.year1})
+                          {example.symbol1}{" "}
+                          <span className="text-gray-400 font-normal">({example.year1})</span>
                         </span>
                         <span className="text-gray-500">vs</span>
                         <span className="font-mono text-[#009edb]">
-                          {example.symbol2} ({example.year2})
+                          {example.symbol2}{" "}
+                          <span className="text-gray-400 font-normal">({example.year2})</span>
                         </span>
                       </div>
                       <svg
