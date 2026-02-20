@@ -166,7 +166,11 @@ export async function fetchUNDocument(symbol: string): Promise<UNDocument> {
   // Try doc format first (docx gives same results)
   const docUrl = `https://documents.un.org/api/symbol/access?s=${symbol}&l=en&t=doc`;
 
-  const docResponse = await fetch(docUrl);
+  const docResponse = await fetch(docUrl, {
+    headers: {
+      "User-Agent": "undifferent/0.1.0 (+https://diff.un-two-zero.dev)",
+    },
+  });
   if (docResponse.ok) {
     try {
       const result = await extractWordDocument(docResponse, symbol);
@@ -180,7 +184,12 @@ export async function fetchUNDocument(symbol: string): Promise<UNDocument> {
   // Fall back to PDF if doc fails
   const pdfUrl = `https://documents.un.org/api/symbol/access?s=${symbol}&l=en&t=pdf`;
 
-  const pdfResponse = await fetch(pdfUrl, { redirect: "follow" });
+  const pdfResponse = await fetch(pdfUrl, {
+    redirect: "follow",
+    headers: {
+      "User-Agent": "undifferent/0.1.0 (+https://diff.un-two-zero.dev)",
+    },
+  });
   if (pdfResponse.ok) {
     try {
       const result = await extractPdfDocument(pdfResponse, symbol);
