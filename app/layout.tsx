@@ -16,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="flex min-h-screen flex-col">
+    <html lang="en" className="h-full overflow-hidden">
+      <body className="flex h-full flex-col overflow-hidden">
         <Header />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <div className="content-scroll flex min-h-0 flex-1 flex-col overflow-y-auto">
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
         <AnimatedLogo />
       </body>
       <GoogleAnalytics gaId="G-0K4Z4DX9HZ" />
