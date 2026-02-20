@@ -75,13 +75,13 @@ console.log(doc.lines); // Array of text lines
 console.log(doc.format); // 'doc' or 'pdf'
 
 // Fetch document metadata from UN Digital Library
-const meta = await fetchDocumentMe;
-tadata("A/HRC/RES/50/13");
+const meta = await fetchDocumentMetadata("A/HRC/RES/50/13");
 console.log(meta.title); // "Access to medicines, vaccines..."
 console.log(meta.date); // "2022-07-14"
 console.log(meta.year); // 2022
 console.log(meta.subjects); // ["RIGHT TO HEALTH", "VACCINES", ...]
 console.log(meta.vote); // { inFavour: 29, against: 15, abstaining: 3 }
+console.log(meta.agendaInfo); // "Agenda item 134" (optional)
 ```
 
 ## Styling
@@ -117,7 +117,7 @@ The React components use CSS variables for theming:
 ### UN Fetcher
 
 - `fetchUNDocument(symbol)` - Fetch UN document content by symbol from [ODS](https://documents.un.org)
-- `fetchDocumentMetadata(symbol)` - Fetch metadata (title, date, year) from [UN Digital Library](https://digitallibrary.un.org)
+- `fetchDocumentMetadata(symbol)` - Fetch metadata (title, date, year, subjects, vote, agendaInfo) from [UN Digital Library](https://digitallibrary.un.org)
 
 ## Project Structure
 
@@ -142,9 +142,9 @@ undifferent/
 └── dist/                   # Built library output
 ```
 
-**IMPORTANT:** The `app/` directory is only a demo. All features, UI components, and logic should be implemented in `src/` (the library). The app should only:
+**Note:** The `app/` directory is the production web app hosted at [diff.un-two-zero.dev](https://diff.un-two-zero.dev). All reusable diff features, UI components, and logic should be implemented in `src/` (the library). The app should only:
 
-- Provide example comparisons
+- Provide the user-facing UI and example comparisons
 - Call the API and pass data to library components
 - Handle routing/navigation
 
