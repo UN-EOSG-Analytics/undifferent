@@ -22,22 +22,56 @@ export function DocumentHeader({
   const pdfUrl = `https://documents.un.org/api/symbol/access?s=${encodeURIComponent(symbol)}&l=en&t=pdf`;
 
   return (
-    <div className={className} style={{ textAlign: "left" }}>
-      <h3 style={{ fontSize: "1rem", fontWeight: 600, margin: 0 }}>{symbol}</h3>
+    <div
+      className={className}
+      style={{
+        textAlign: "left",
+        background: "#fff",
+        borderRadius: "0.75rem",
+        padding: "1rem 1.25rem",
+        boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.07), 0 0 0 1px rgb(0 0 0 / 0.04)",
+      }}
+    >
+      <p
+        style={{
+          margin: 0,
+          fontSize: "0.65rem",
+          fontWeight: 600,
+          letterSpacing: "0.08em",
+          textTransform: "uppercase",
+          color: "#9ca3af",
+          marginBottom: "0.35rem",
+        }}
+      ></p>
+      <h3
+        style={{
+          fontSize: "1.125rem",
+          fontWeight: 700,
+          margin: 0,
+          letterSpacing: "-0.01em",
+          color: "#111827",
+        }}
+      >
+        {symbol}
+      </h3>
 
       {metadata?.date && (
         <p
           style={{
-            marginTop: "0.25rem",
-            fontSize: "0.875rem",
-            color: "#4b5563",
+            marginTop: "0.3rem",
+            fontSize: "0.8125rem",
+            color: "#6b7280",
           }}
         >
-          {new Date(metadata.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
+          {(() => {
+            // Parse YYYY-MM-DD parts directly to avoid UTC→local timezone shift
+            const [y, m, d] = metadata.date!.split("-").map(Number);
+            return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            });
+          })()}
         </p>
       )}
 
@@ -46,10 +80,13 @@ export function DocumentHeader({
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          display: "inline-block",
-          marginTop: "0.25rem",
-          fontSize: "0.875rem",
-          color: "var(--color-un-blue)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "0.25rem",
+          marginTop: "0.6rem",
+          fontSize: "0.8125rem",
+          fontWeight: 500,
+          color: "var(--color-un-blue, #009edb)",
           textDecoration: "none",
         }}
         onMouseEnter={(e) =>

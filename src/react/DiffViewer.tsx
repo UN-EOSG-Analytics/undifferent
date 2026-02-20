@@ -19,6 +19,7 @@ export interface DiffViewerProps {
     format?: "doc" | "pdf";
   };
   className?: string;
+  searchQuery?: string;
 }
 
 /**
@@ -29,6 +30,7 @@ export function DiffViewer({
   left,
   right,
   className = "",
+  searchQuery,
 }: DiffViewerProps) {
   return (
     <div
@@ -37,7 +39,7 @@ export function DiffViewer({
     >
       {/* Document Headers */}
       <div
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}
       >
         <DocumentHeader
           symbol={left.symbol}
@@ -54,7 +56,7 @@ export function DiffViewer({
       {/* Diff items */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {data.items.map((item, index) => (
-          <Comparison key={index} item={item} />
+          <Comparison key={index} item={item} searchQuery={searchQuery} />
         ))}
       </div>
     </div>
