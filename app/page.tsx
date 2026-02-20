@@ -181,6 +181,8 @@ function HomeContent() {
     );
   };
 
+  const fetchedSymbolsRef = useRef<string>("");
+
   useEffect(() => {
     const symbol1Param = searchParams.get("symbol1");
     const symbol2Param = searchParams.get("symbol2");
@@ -189,7 +191,11 @@ function HomeContent() {
     if (symbol2Param) setSymbol2(symbol2Param);
 
     if (symbol1Param && symbol2Param) {
-      fetchDiff(symbol1Param, symbol2Param);
+      const key = `${symbol1Param}::${symbol2Param}`;
+      if (key !== fetchedSymbolsRef.current) {
+        fetchedSymbolsRef.current = key;
+        fetchDiff(symbol1Param, symbol2Param);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
@@ -209,10 +215,6 @@ function HomeContent() {
 
   const identicalCount =
     diffData?.items.filter((item) => item.score === 1).length ?? 0;
-  const filteredDiffData =
-    hideIdentical && diffData
-      ? { ...diffData, items: diffData.items.filter((item) => item.score !== 1) }
-      : diffData;
 
   const hasQueryParams =
     searchParams.get("symbol1") || searchParams.get("symbol2");
@@ -547,8 +549,9 @@ function HomeContent() {
 
             <div ref={diffContainerRef}>
               <DiffViewer
-                data={filteredDiffData!}
+                data={diffData}
                 searchQuery={searchQuery || undefined}
+                hideIdentical={hideIdentical}
                 left={{
                   symbol: symbol1,
                   metadata: diffData.metadata?.left,
