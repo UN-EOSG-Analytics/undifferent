@@ -5,7 +5,7 @@ A diff algorithm and viewer for comparing documents, with special support for UN
 ## Installation
 
 ```bash
-npm install github:un-eosg-analytics/undifferent
+npm install github:un-eosg-analytics/undifferent#release
 ```
 
 ## Usage
@@ -139,7 +139,7 @@ undifferent/
 ├── app/                    # DEMO APP ONLY - just consumes the library
 │   ├── page.tsx            # Demo page with example comparisons
 │   └── api/diff/route.ts   # API endpoint using un-fetcher
-└── dist/                   # Built library output
+└── dist/                   # Built library output (generated on the release branch)
 ```
 
 **Note:** The `app/` directory is the production web app hosted at [diff.un-two-zero.dev](https://diff.un-two-zero.dev). All reusable diff features, UI components, and logic should be implemented in `src/` (the library). The app should only:
