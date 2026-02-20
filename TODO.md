@@ -4,4 +4,3 @@
 - find edge cases
 - styling
 - search
-- share button
