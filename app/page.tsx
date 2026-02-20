@@ -39,6 +39,25 @@ function HomeContent() {
   const diffContainerRef = useRef<HTMLDivElement>(null);
   const sessionCacheRef = useRef<Map<string, DiffResponse>>(new Map());
 
+  // localStorage helpers — keyed by symbol pair, silently no-op if storage
+  // is unavailable or full (private mode, quota exceeded, etc.)
+  const LS_PREFIX = "undiff::";
+  const lsGet = (key: string): DiffResponse | null => {
+    try {
+      const raw = localStorage.getItem(LS_PREFIX + key);
+      return raw ? (JSON.parse(raw) as DiffResponse) : null;
+    } catch {
+      return null;
+    }
+  };
+  const lsSet = (key: string, value: DiffResponse) => {
+    try {
+      localStorage.setItem(LS_PREFIX + key, JSON.stringify(value));
+    } catch {
+      // quota exceeded or storage unavailable — just skip
+    }
+  };
+
   // Count matches and reset index whenever the deferred query changes
   useEffect(() => {
     const container = diffContainerRef.current;
@@ -95,9 +114,20 @@ function HomeContent() {
     setSearchInput("");
 
     const cacheKey = `${symbolA.trim()}::${symbolB.trim()}`;
-    const cached = sessionCacheRef.current.get(cacheKey);
-    if (cached) {
-      setDiffData(cached);
+
+    // 1. In-memory session cache (fastest)
+    const sessionCached = sessionCacheRef.current.get(cacheKey);
+    if (sessionCached) {
+      setDiffData(sessionCached);
+      setLoading(false);
+      return;
+    }
+
+    // 2. localStorage — survives page refresh / re-opening the same URL
+    const lsCached = lsGet(cacheKey);
+    if (lsCached) {
+      sessionCacheRef.current.set(cacheKey, lsCached);
+      setDiffData(lsCached);
       setLoading(false);
       return;
     }
@@ -119,6 +149,7 @@ function HomeContent() {
 
       const data = await response.json();
       sessionCacheRef.current.set(cacheKey, data);
+      lsSet(cacheKey, data);
       setDiffData(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");

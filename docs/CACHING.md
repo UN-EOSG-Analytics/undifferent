@@ -168,6 +168,10 @@ Explicitly cache parsed documents and/or full diff results in Vercel KV, keyed b
 
 **Option B — deferred.** POST → GET migration is the bigger architectural change. Skipping for now.
 
-**D (client-side)** is worth adding as a free improvement regardless — a `useRef` map in the page component means flipping between two already-seen pairs in the same session is instant.
+**Option D — implemented.** The page now has a two-level client cache:
+- **In-memory** (`useRef` Map): instant within the same tab session
+- **`localStorage`**: survives page refresh and re-opening the same URL in a new tab
+
+Both are keyed by `${symbolA}::${symbolB}` under the `undiff::` prefix. Writes to `localStorage` are wrapped in try/catch so quota-exceeded and private-mode environments degrade gracefully to session-only caching.
 
 **E (KV) — skip.** Overkill given A covers the main cases.
