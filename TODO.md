@@ -8,8 +8,10 @@
 - allow changing symbols on the diff page?
 - series timeline, progressive diff?
 - heatmap on scrollbar
+- session store history of comparisons on main page
 
 ## Library
 
 - test edge cases
 - validate
+- word count?
