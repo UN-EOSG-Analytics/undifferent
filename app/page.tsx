@@ -93,6 +93,7 @@ function HomeContent() {
     if (symbol1Param && symbol2Param) {
       fetchDiff(symbol1Param, symbol2Param);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   const hasQueryParams =

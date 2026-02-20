@@ -7,8 +7,10 @@ export function AnimatedLogo() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Trigger animation on mount
-    setMounted(true);
+    // Trigger animation on mount — deferred via rAF to avoid
+    // synchronous setState inside an effect body.
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return (
