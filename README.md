@@ -142,7 +142,7 @@ undifferent/
 └── dist/                   # Built library output (generated on the release branch)
 ```
 
-**Note:** The `app/` directory is the production web app hosted at [diff.un-two-zero.dev](https://diff.un-two-zero.dev). All reusable diff features, UI components, and logic should be implemented in `src/` (the library). The app should only:
+**Note:** The `app/` directory is the production web app hosted at [diff.un-two-zero.org](https://diff.un-two-zero.org). All reusable diff features, UI components, and logic should be implemented in `src/` (the library). The app should only:
 
 - Provide the user-facing UI and example comparisons
 - Call the API and pass data to library components
@@ -150,4 +150,4 @@ undifferent/
 
 ## License
 
-MIT
+MIT (c) United Nations 2026
